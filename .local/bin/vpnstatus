@@ -1,0 +1,5 @@
+#!/bin/bash
+
+vpn_status=$(ip a | grep -i tun0 > /dev/null && ip a | grep -i tun0 | tail -n 1 | awk '{print $2}') || printf Disconected 
+
+echo $vpn_status
