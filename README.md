@@ -8,5 +8,3 @@ The Status bar will show information that is important to me when working with m
 Anyway, this is a preview of how it looks.
 
 <p align="center"><img src="./preview/labscreen.png"></p>
-
-I will try to keep the repository updated and in the future I'll add a list of the Shortcuts I configured and how to use them.
