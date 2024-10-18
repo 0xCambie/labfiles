@@ -8,3 +8,4 @@ The Status bar will show information that is important to me when working with m
 Anyway, this is a preview of how it looks.
 
 <p align="center"><img src="./preview/labscreen.png"></p>
+# Labfiles
