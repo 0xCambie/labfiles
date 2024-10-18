@@ -1,0 +1,7 @@
+#!/bin/bash
+
+/bin/ls /sys/class/net | grep -Ev 'lo|docker0' | while read line; do 
+  lanstatus=$(ip a | grep -i $line | tail -n 1 | awk '{print $2}')
+  echo $lanstatus
+done
+

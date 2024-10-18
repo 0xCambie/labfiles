@@ -1,0 +1,6 @@
+#!/bin/bash
+
+dockerstatus=$(ip a | grep -w $docker0 > /dev/null && ip a| tail -n 1 | awk '{print $2}' || printf '')
+echo $dockerstatus
+done
+
