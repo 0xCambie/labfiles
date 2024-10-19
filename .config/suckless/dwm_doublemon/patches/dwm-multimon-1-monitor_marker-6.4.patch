@@ -1,0 +1,196 @@
+From c13f9b5a379422525ec7f714d83a1cbb0e3251c2 Mon Sep 17 00:00:00 2001
+From: "Gary B. Genett" <me@garybgenett.net>
+Date: Sun, 19 Feb 2023 08:56:42 -0800
+Subject: added monitor marker to bar
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="------------2.37.4"
+
+This is a multi-part message in MIME format.
+--------------2.37.4
+Content-Type: text/plain; charset=UTF-8; format=fixed
+Content-Transfer-Encoding: 8bit
+
+---
+ config.def.h |  2 ++
+ dwm.c        | 12 +++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+
+--------------2.37.4
+Content-Type: text/x-patch; name="0001-added-monitor-marker-to-bar.patch"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: attachment; filename="0001-added-monitor-marker-to-bar.patch"
+
+diff --git a/config.def.h b/config.def.h
+index 9efa7744b39c8b0ff0cf09a504a2539910c2881c..9d549ce8628e1a7769ee2a3d5c0a4c6d56ce6931 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -96,20 +96,22 @@ static const Key keys[] = {
+ 	TAGKEYS(                        XK_9,                      8)
+ 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+ };
+ 
+ /* button definitions */
+ /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+ static const Button buttons[] = {
+ 	/* click                event mask      button          function        argument */
+ 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+ 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
++	{ ClkMonNum,            0,              Button1,        focusmon,       {.i = +1} },
++	{ ClkMonNum,            0,              Button3,        focusmon,       {.i = -1} },
+ 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+ 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+ 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+ 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+ 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+ 	{ ClkTagBar,            0,              Button1,        view,           {0} },
+ 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
+ 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+ 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+ };
+diff --git a/dwm.c b/dwm.c
+index c2bd8710544eb4b4e7eaa4a1307e1f1dfd8d16ba..bc5160a7d46ab07da82f0595abb7700debb2b891 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -57,21 +57,21 @@
+ #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
+ #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+ 
+ /* enums */
+ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
+ enum { SchemeNorm, SchemeSel }; /* color schemes */
+ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
+-enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
++enum { ClkTagBar, ClkLtSymbol, ClkMonNum, ClkStatusText, ClkWinTitle,
+        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
+ 
+ typedef union {
+ 	int i;
+ 	unsigned int ui;
+ 	float f;
+ 	const void *v;
+ } Arg;
+ 
+ typedef struct {
+@@ -106,20 +106,21 @@ typedef struct {
+ 	const Arg arg;
+ } Key;
+ 
+ typedef struct {
+ 	const char *symbol;
+ 	void (*arrange)(Monitor *);
+ } Layout;
+ 
+ struct Monitor {
+ 	char ltsymbol[16];
++	char monmark[16];
+ 	float mfact;
+ 	int nmaster;
+ 	int num;
+ 	int by;               /* bar geometry */
+ 	int mx, my, mw, mh;   /* screen size */
+ 	int wx, wy, ww, wh;   /* window area  */
+ 	unsigned int seltags;
+ 	unsigned int sellt;
+ 	unsigned int tagset[2];
+ 	int showbar;
+@@ -434,20 +435,22 @@ buttonpress(XEvent *e)
+ 	if (ev->window == selmon->barwin) {
+ 		i = x = 0;
+ 		do
+ 			x += TEXTW(tags[i]);
+ 		while (ev->x >= x && ++i < LENGTH(tags));
+ 		if (i < LENGTH(tags)) {
+ 			click = ClkTagBar;
+ 			arg.ui = 1 << i;
+ 		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
+ 			click = ClkLtSymbol;
++		else if (ev->x < x + TEXTW(selmon->ltsymbol) + TEXTW(selmon->monmark))
++			click = ClkMonNum;
+ 		else if (ev->x > selmon->ww - (int)TEXTW(stext))
+ 			click = ClkStatusText;
+ 		else
+ 			click = ClkWinTitle;
+ 	} else if ((c = wintoclient(ev->window))) {
+ 		focus(c);
+ 		restack(selmon);
+ 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
+ 		click = ClkClientWin;
+ 	}
+@@ -637,20 +640,22 @@ createmon(void)
+ 
+ 	m = ecalloc(1, sizeof(Monitor));
+ 	m->tagset[0] = m->tagset[1] = 1;
+ 	m->mfact = mfact;
+ 	m->nmaster = nmaster;
+ 	m->showbar = showbar;
+ 	m->topbar = topbar;
+ 	m->lt[0] = &layouts[0];
+ 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
+ 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
++	/* this is actually set in updategeom, to avoid a race condition */
++//	snprintf(m->monmark, sizeof(m->monmark), "(%d)", m->num);
+ 	return m;
+ }
+ 
+ void
+ destroynotify(XEvent *e)
+ {
+ 	Client *c;
+ 	XDestroyWindowEvent *ev = &e->xdestroywindow;
+ 
+ 	if ((c = wintoclient(ev->window)))
+@@ -726,20 +731,23 @@ drawbar(Monitor *m)
+ 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+ 		if (occ & 1 << i)
+ 			drw_rect(drw, x + boxs, boxs, boxw, boxw,
+ 				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+ 				urg & 1 << i);
+ 		x += w;
+ 	}
+ 	w = TEXTW(m->ltsymbol);
+ 	drw_setscheme(drw, scheme[SchemeNorm]);
+ 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
++	w = TEXTW(m->monmark);
++	drw_setscheme(drw, scheme[SchemeNorm]);
++	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->monmark, 0);
+ 
+ 	if ((w = m->ww - tw - x) > bh) {
+ 		if (m->sel) {
+ 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+ 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+ 			if (m->sel->isfloating)
+ 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+ 		} else {
+ 			drw_setscheme(drw, scheme[SchemeNorm]);
+ 			drw_rect(drw, x, 0, w, bh, 1, 1);
+@@ -1886,20 +1894,22 @@ updategeom(void)
+ 			else
+ 				mons = createmon();
+ 		}
+ 		for (i = 0, m = mons; i < nn && m; m = m->next, i++)
+ 			if (i >= n
+ 			|| unique[i].x_org != m->mx || unique[i].y_org != m->my
+ 			|| unique[i].width != m->mw || unique[i].height != m->mh)
+ 			{
+ 				dirty = 1;
+ 				m->num = i;
++				/* this is ugly, but it is a race condition otherwise */
++				snprintf(m->monmark, sizeof(m->monmark), "(%d)", m->num);
+ 				m->mx = m->wx = unique[i].x_org;
+ 				m->my = m->wy = unique[i].y_org;
+ 				m->mw = m->ww = unique[i].width;
+ 				m->mh = m->wh = unique[i].height;
+ 				updatebarpos(m);
+ 			}
+ 		/* removed monitors if n > nn */
+ 		for (i = nn; i < n; i++) {
+ 			for (m = mons; m && m->next; m = m->next);
+ 			while ((c = m->clients)) {
+
+--------------2.37.4--
+
+

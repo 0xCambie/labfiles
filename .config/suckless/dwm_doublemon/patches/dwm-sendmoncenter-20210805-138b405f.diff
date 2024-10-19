@@ -1,0 +1,28 @@
+From 449324adbe53240a734cb5f8f72763bb3419829a Mon Sep 17 00:00:00 2001
+From: Rizqi Nur Assyaufi <bandithijo@gmail.com>
+Date: Sat, 5 Aug 2021 00:04:32 +0800
+Subject: [PATCH] [sendmoncenter] Send floating window to another monitor will
+ centered
+
+This patch will allows you to send floating window client to another monitor
+will be centered position.
+---
+ dwm.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/dwm.c b/dwm.c
+index 5e4d494..c20023e 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1418,6 +1418,8 @@ sendmon(Client *c, Monitor *m)
+ 	detachstack(c);
+ 	c->mon = m;
+ 	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
++    c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
++    c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+ 	attach(c);
+ 	attachstack(c);
+ 	focus(NULL);
+--
+2.31.1
+

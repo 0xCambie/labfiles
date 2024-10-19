@@ -1,0 +1,60 @@
+From 4adc917ed63215dfe736798f94623cd251cfbccb Mon Sep 17 00:00:00 2001
+From: Larry <fake_larry@protonmail.com>
+Date: Tue, 13 Aug 2019 04:47:44 +0000
+Subject: [PATCH] Center client as a keybind.
+
+---
+ config.def.h |  1 +
+ dwm.c        | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/config.def.h b/config.def.h
+index 1c0b587..fe14e10 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -71,6 +71,7 @@ static Key keys[] = {
+ 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+ 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+ 	{ MODKEY,                       XK_Return, zoom,           {0} },
++	{ MODKEY,                       XK_g,      center,         {0} },
+ 	{ MODKEY,                       XK_Tab,    view,           {0} },
+ 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+diff --git a/dwm.c b/dwm.c
+index 4465af1..15eadc2 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -149,6 +149,7 @@ static void arrangemon(Monitor *m);
+ static void attach(Client *c);
+ static void attachstack(Client *c);
+ static void buttonpress(XEvent *e);
++static void center(const Arg *unused);
+ static void checkotherwm(void);
+ static void cleanup(void);
+ static void cleanupmon(Monitor *mon);
+@@ -455,6 +456,23 @@ buttonpress(XEvent *e)
+ 			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
+ }
+ 
++void
++center(const Arg *unused)
++{
++	Client *c;
++
++	if (selmon->lt[selmon->sellt]->arrange && !(selmon->sel && selmon->sel->isfloating))
++		return;
++
++	c = selmon->sel;
++
++	resizeclient(c,
++	             selmon->wx + (selmon->ww / 2 - WIDTH(c) / 2),
++	             selmon->wy + (selmon->wh / 2 - HEIGHT(c) / 2),
++	             c->w,
++	             c->h);
++}
++
+ void
+ checkotherwm(void)
+ {
+-- 
+2.21.0

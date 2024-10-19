@@ -1,0 +1,47 @@
+From 9cd7e774ec9f2289d5310e9a6a95171126636a14 Mon Sep 17 00:00:00 2001
+From: Benjamin Chausse <benjamin@chausse.xyz>
+Date: Wed, 30 Mar 2022 23:32:01 -0400
+Subject: [PATCH] Mainmon - Main monitor for the statusbar
+
+This small patch add a mainmon value to the config.def.h.
+It let's the user choose a monitor on which to have the
+statusbar show-up. The status will no longer follow which
+monitor is currently selected.
+
+It is especially usefull in two scenarios:
+- A monitor is setup vertically and has little room for the status.
+- Dwm is used in a public environment and it's user does not want
+  the contents of the status bar to be shown (i.e. on a projector).
+---
+ config.def.h | 1 +
+ dwm.c        | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/config.def.h b/config.def.h
+index a2ac963..c229c10 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -36,6 +36,7 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95]
+ static const int nmaster     = 1;    /* number of clients in master area */
+ static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
++static const int mainmon = 0; /* xsetroot will only change the bar on this monitor */
+ 
+ static const Layout layouts[] = {
+ 	/* symbol     arrange function */
+diff --git a/dwm.c b/dwm.c
+index 5f16260..9cf08fb 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -707,7 +707,7 @@ drawbar(Monitor *m)
+ 		return;
+ 
+ 	/* draw status first so it can be overdrawn by tags later */
+-	if (m == selmon) { /* status is only drawn on selected monitor */
++	if (m == &mons[mainmon]) { /* status is only drawn on main monitor */
+ 		drw_setscheme(drw, scheme[SchemeNorm]);
+ 		tw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
+ 		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
+-- 
+2.35.1
+

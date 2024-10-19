@@ -1,0 +1,31 @@
+From 5e8c07dbbf3a2717a1fc852bccc958d789b80540 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Gutyina=20Gerg=C5=91?= <gutyina.gergo.2@gmail.com>
+Date: Thu, 24 Aug 2023 15:39:20 +0200
+Subject: [PATCH] Always show the active monitor with bar color
+
+---
+ dwm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/dwm.c b/dwm.c
+index f1d86b2..7cd6d4c 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -735,13 +735,12 @@ drawbar(Monitor *m)
+ 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+ 
+ 	if ((w = m->ww - tw - x) > bh) {
++		drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+ 		if (m->sel) {
+-			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+ 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+ 			if (m->sel->isfloating)
+ 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+ 		} else {
+-			drw_setscheme(drw, scheme[SchemeNorm]);
+ 			drw_rect(drw, x, 0, w, bh, 1, 1);
+ 		}
+ 	}
+-- 
+2.41.0
+
