@@ -9,4 +9,7 @@ Anyway, this is a preview of how it looks.
 
 <p align="center"><img src="./preview/labscreen.png"></p>
 
+This is the preview with double monitor:
+
+<p align="center"><img src="./preview/labscreen_doublemon:.png"></p>
 
