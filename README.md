@@ -11,5 +11,5 @@ Anyway, this is a preview of how it looks.
 
 This is the preview with double monitor:
 
-<p align="center"><img src="./preview/labscreen_doublemon:.png"></p>
+<p align="center"><img src="./preview/labscreen_doublemon.png"></p>
 
