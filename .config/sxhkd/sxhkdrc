@@ -12,7 +12,7 @@ super + shift + q
 
 # Powermenu
 super + {Escape} 
-  /home/frawd/.local/bin/powermenu
+  $HOME/.local/bin/powermenu
 
 # Cutter
 super + c

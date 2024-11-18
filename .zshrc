@@ -88,6 +88,13 @@ function checknet(){
   pkill -RTMIN+11 dwmblocks
 }
 
+# Show md5 and sha256 hashes of a file:
+function getHashes(){
+  echo "MD5: $(md5sum $1)"
+  echo "SHA256: $(sha256sum $1)"
+  echo -e "\t Lookfor this hashes in: https://virustotal.com/search"
+}
+
 # Show open TCP/UDP ports on the terminal from a nmap tcp/udp scan.
 function showPorts(){
   targetip=$(cat /tmp/environ/environment | awk '{print $1}')
