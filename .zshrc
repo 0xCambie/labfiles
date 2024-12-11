@@ -155,6 +155,6 @@ function rmk(){
 
 bindkey "^[[H" beginning-of-line
 bindkey "^[[4~" end-of-line
-bindkey "^[[P" delete-char
+bindkey "^[[3~" delete-char
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
