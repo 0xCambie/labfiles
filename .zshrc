@@ -47,7 +47,7 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-source /home/frawd/powerlevel10k/powerlevel10k.zsh-theme
+source /home/$USER/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -91,8 +91,9 @@ function checknet(){
 # Show md5 and sha256 hashes of a file:
 function getHashes(){
   echo "MD5: $(md5sum $1)"
+  echo "SHA1: $(sha1sum $1)"
   echo "SHA256: $(sha256sum $1)"
-  echo -e "\t Lookfor this hashes in: https://virustotal.com/search"
+  echo -e "\t Lookfor this hashes in: https://www.virustotal.com/gui/home/search"
 }
 
 # Show open TCP/UDP ports on the terminal from a nmap tcp/udp scan.

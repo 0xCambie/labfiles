@@ -4,7 +4,7 @@ static const Block blocks[] = {
 	{"󰋜 HOME:", "homestatus", 	0,		11},
 	{"󰩠 LAN:", "lanstatus", 	0,		11},
 	{"󰱓 INET:", "connectionstatus", 	0,		11},
-	{" Docker:", "dockerstatus", 	0,		11},
+	{" Docker:", "dockerstatus", 	0,    11},
 	{"󰆧 VPN:", "vpnstatus", 	0,		11},
 	{"󰓾 Target:", "targetstatus", 	0,		10},
 };
