@@ -4,11 +4,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 # Disable .NET Telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-# Enable Powerlevel10k instant prompt. Should stay at the top of ~/.zshrc.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Set up the prompt
 autoload -Uz promptinit
 promptinit
@@ -47,10 +42,9 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-source /home/$USER/powerlevel10k/powerlevel10k.zsh-theme
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# Enable Oh-my-posh.
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/base.toml)"
 
 # Setting up the Path for .NET tools
 export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
@@ -149,9 +143,6 @@ function rmk(){
 	scrub -p dod $1
 	shred -zun 10 -v $1
 }
-
-# Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
-(( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
 
 bindkey "^[[H" beginning-of-line
 bindkey "^[[4~" end-of-line
