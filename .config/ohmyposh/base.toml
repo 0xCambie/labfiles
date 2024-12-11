@@ -67,10 +67,10 @@ final_space = true
       fetch_upstream_icon = true
 
   [[blocks.segments]]
-    template = '  '
+    template = ' 󱗗 '
     foreground = 'p:white'
     powerline_symbol = ''
-    background = 'p:yellow'
+    background = 'p:red'
     type = 'root'
     style = 'powerline'
 
