@@ -55,6 +55,9 @@ alias la='lsd -a --group-dirs=first'
 alias l='lsd --group-dirs=first'
 alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
+alias malbian='sudo qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=/var/lib/libvirt/images/debImage.img -m 4G -cpu host -smp 2 -vga virtio -display sdl,show-cursor=on'
+alias blackarch='sudo qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=/var/lib/libvirt/images/archImage.img -m 4G -cpu host -smp 2 -vga virtio -display sdl,show-cursor=on'
+alias flareVM='sudo qemu-system-x86_64 -enable-kvm --boot menu=on -drive file=/var/lib/libvirt/images/flarevmImage.img -m 4G -cpu host -smp 2 -vga virtio -display sdl,show-cursor=on -usbdevice tablet'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh || source <(fzf --zsh)
 
@@ -87,6 +90,10 @@ function getHashes(){
   echo "MD5: $(md5sum $1)"
   echo "SHA1: $(sha1sum $1)"
   echo "SHA256: $(sha256sum $1)"
+  echo "SHA384: $(sha384sum $1)"
+  echo "SHA512: $(sha512sum $1)"
+  echo -e "\t Look for this hashes in: https://www.virustotal.com/gui/home/search"
+}
   echo -e "\t Lookfor this hashes in: https://www.virustotal.com/gui/home/search"
 }
 
