@@ -7,9 +7,9 @@ The Status bar will show information that is important to me when working with m
 
 Anyway, this is a preview of how it looks.
 
-<p align="center"><img src="./preview/labscreen.png"></p>
+<p align="center"><img src="./preview/labscreen_update.png"></p>
 
 This is the preview with double monitor:
 
-<p align="center"><img src="./preview/labscreen_doublemon.png"></p>
+<p align="center"><img src="./preview/labscreen_doublemon_update.png"></p>
 
