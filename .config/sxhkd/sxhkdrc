@@ -29,3 +29,11 @@ super + b
 # File Manager
 super + e
 	thunar
+
+# Wireshark
+super + l
+  wireshark
+
+# Calendar
+super + t
+  gsimplecal

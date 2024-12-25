@@ -92,7 +92,7 @@ function getHashes(){
   echo "SHA256: $(sha256sum $1)"
   echo "SHA384: $(sha384sum $1)"
   echo "SHA512: $(sha512sum $1)"
-  echo -e "\t Look for this hashes in: https://www.virustotal.com/gui/home/search"
+  echo -e "\t Look for this hashes in: https://www.virustotal.com/en/file/$(md5sum $1)"
 }
 
 # Show open TCP/UDP ports on the terminal from a nmap tcp/udp scan.
