@@ -1,7 +1,6 @@
 #!/bin/bash
 
-window_index=$(tmux display-message -p "#I")
-selected=$(tmux display-message -p "#F")
+window_index=$(tmux display-message -p "#{window_index}")
 
 case "$window_index" in
   "1") icon="󰼏 ";;
@@ -16,10 +15,4 @@ case "$window_index" in
   "0") icon="󰿪 ";;
 esac
 
-if [[ $selected == "*" ]]; then
-  sel_icon=""
-else
-  sel_icon=""
-fi
-
-echo " $icon#W$sel_icon "
+echo " $icon#{?#{window_zoomed_flag},󰍉 ,}#W#{?#{window_active},, }"
