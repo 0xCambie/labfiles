@@ -1,7 +1,7 @@
 ### General ###
 
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 5
+mouse-scroll-multiplier = 2
 
 cursor-style = block
 cursor-style-blink = true
@@ -19,7 +19,7 @@ confirm-close-surface = false
 font-family = "JetBrains Mono"
 font-size = 10
 
-### Baground ###
+### Backround ###
 
 background-opacity = 0.90
 
@@ -29,24 +29,25 @@ font-feature = -dlig
 font-feature = -liga
 font-feature = -calt 
 
-### Quick Terminal ###
-
 ### Keybinds ####
 
 keybind = control+shift+r=reload_config
 
-
 keybind = control+shift+-=new_split:down
 keybind = control+shift+'=new_split:right
-
 keybind = control+shift+z=toggle_split_zoom
 
 keybind = control+shift+h=goto_split:left
 keybind = control+shift+j=goto_split:bottom
 keybind = control+shift+k=goto_split:top
 keybind = control+shift+l=goto_split:right
-keybind = control+shift+n=goto_split:next
 keybind = control+shift+p=goto_split:previous
+keybind = control+shift+n=goto_split:next
+
+keybind = control+up=adjust_selection:up
+keybind = control+down=adjust_selection:down
+keybind = control+left=adjust_selection:left
+keybind = control+right=adjust_selection:right
 
 keybind = control+shift+equal=equalize_splits
 keybind = control+shift+up=resize_split:up,10

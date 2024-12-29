@@ -1,0 +1,25 @@
+#!/bin/bash
+
+window_index=$(tmux display-message -p "#I")
+selected=$(tmux display-message -p "#F")
+
+case "$window_index" in
+  "1") icon="󰼏 ";;
+  "2") icon="󰼐 ";;
+  "3") icon="󰼑 ";;
+  "4") icon="󰼒 ";;
+  "5") icon="󰼓 ";;
+  "6") icon="󰼔 ";;
+  "7") icon="󰼕 ";;
+  "8") icon="󰼖 ";;
+  "9") icon="󰼗 ";;
+  "0") icon="󰿪 ";;
+esac
+
+if [[ $selected == "*" ]]; then
+  sel_icon=""
+else
+  sel_icon=""
+fi
+
+echo " $icon#W$sel_icon "
