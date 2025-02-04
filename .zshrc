@@ -4,6 +4,12 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 # Disable .NET Telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
+# Export Path
+PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/zig:/usr/local/jdk-23/bin:$HOME/.local/bin
+
+# Setting up the Path for .NET tools
+export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
+
 # Set up the prompt
 autoload -Uz promptinit
 promptinit
@@ -45,9 +51,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # Enable Oh-my-posh.
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/base.toml)"
-
-# Setting up the Path for .NET tools
-export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
 
 # Manual aliases
 alias ll='lsd -lh --group-dirs=first'
