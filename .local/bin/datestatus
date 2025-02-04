@@ -3,31 +3,30 @@
 task=$(date '+%I%p')
 
 case "$task" in
-  "00AM") icon="󰒲";;
-  "01AM") icon="󰒲";;
-  "02AM") icon="󰒲";;
-  "03AM") icon="󰒲";;
-  "04AM") icon="󰒲";;
-  "05AM") icon="󰒲";;
-  "06AM") icon="󰒲";;
-  "07AM") icon="󰒲";;
-  "08AM") icon="󰒲";;
-  "09AM") icon="";;
-  "10AM") icon="";;
-  "11AM") icon="";;
-  "12AM") icon="";;
-  "01PM") icon="󱜜";;
-  "02PM") icon="";;
-  "03PM") icon="";;
-  "04PM") icon="";;
-  "05PM") icon="";;
-  "06PM") icon="";;
-  "06PM") icon="󱛐";;
-  "07PM") icon="";;
-  "08PM") icon="";;
-  "09PM") icon="";;
-  "10PM") icon="";;
-  "11PM") icon="";;
+  "12AM") icon="󰒲 ";;
+  "01AM") icon="󰒲 ";;
+  "02AM") icon="󰒲 ";;
+  "03AM") icon="󰒲 ";;
+  "04AM") icon="󰒲 ";;
+  "05AM") icon=" ";;
+  "06AM") icon=" ";;
+  "07AM") icon=" ";;
+  "08AM") icon=" ";;
+  "09AM") icon=" ";;
+  "10AM") icon=" ";;
+  "11AM") icon=" ";;
+  "12PM") icon=" ";;
+  "01PM") icon="󱜜 ";;
+  "02PM") icon=" ";;
+  "03PM") icon=" ";;
+  "04PM") icon=" ";;
+  "05PM") icon=" ";;
+  "06PM") icon="󱛐 ";;
+  "07PM") icon=" ";;
+  "08PM") icon=" ";;
+  "09PM") icon=" ";;
+  "10PM") icon="󰒲";;
+  "11PM") icon="󰒲";;
 
 esac
 

@@ -36,7 +36,7 @@ final_space = true
     trailing_diamond = ''
     template = ' {{ if .SSHSession }} {{ end }}{{ .UserName }} 󰣇 '
     foreground = 'p:white'
-    background = 'p:red'
+    background = 'p:blue'
     type = 'session'
     style = 'diamond'
 
